@@ -89,13 +89,14 @@ export const connectCallModal = function(WrappedComponent) {
           backgroundColor: property.backgroundColor || 'rgba(0, 0, 0, 0.3)',
           closeWhenPressBackground: property.closeWhenPressBackground,
           modalProps: property.modalProps,
+          containerStyle: property.containerStyle,
         });
       });
     };
 
     render() {
       const Content = this.state.content;
-      const modalProps = this.state.modalProps;
+      const { modalProps, containerStyle } = this.state;
 
       return (
         <View style={styles.container}>
@@ -109,12 +110,11 @@ export const connectCallModal = function(WrappedComponent) {
           >
             <TouchableWithoutFeedback onPress={this.handleBackgroundPress}>
               <View
-                style={[
-                  styles.modalBackground,
-                  {
-                    backgroundColor: this.state.backgroundColor,
-                  },
-                ]}
+                style={{
+                  ...styles.modalBackground,
+                  backgroundColor: this.state.backgroundColor,
+                  ...containerStyle
+                }}
               >
                 <TouchableWithoutFeedback onPress={this.handleContentPress}>
                   <Content requestCloseModal={this.handleCloseModal} {...modalProps} />
